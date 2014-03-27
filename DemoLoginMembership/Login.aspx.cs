@@ -18,9 +18,20 @@ namespace DemoLoginMembership
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
-            
-            //Response.Write(Request.Cookies[FormsAuthentication.FormsCookieName].Values[0]);
-            bool isAuthen = Authen.authen(txtUsername.Text,txtPassword.Text,DropDownList1.SelectedIndex);
+            if (DropDownList1.SelectedIndex == 0)
+            {
+                Authentication.SetAuthenticationMode(Authentication.AuthenticationMode.Membership);
+            }
+            else
+            {
+                Authentication.SetAuthenticationMode(Authentication.AuthenticationMode.Ldap);
+                Authentication.SetLdapServer("LDAP://localhost:10389");
+                Authentication.SetBaseAddress("dc=example,dc=com");
+            }
+
+            var authenticator = Authentication.GetAuthenticator();
+            bool isAuthen = authenticator.Authenticate(txtUsername.Text, txtPassword.Text);
+
             if (isAuthen)
             {
                 FormsAuthentication.RedirectFromLoginPage(txtUsername.Text, cbRememberme.Checked);
