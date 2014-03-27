@@ -60,13 +60,13 @@ namespace DemoLoginMembership
     {
         public enum AuthenticationMode
 	    {
-	         LdapAuthentication,
-             MembershipAuthentication
+             Ldap,
+             Membership
 	    }
 
         private static MembershipAuthenticator membershipAuthenticator = null;
         private static LdapAuthenticator ldapAuthenticator = null;
-        private static AuthenticationMode mode = AuthenticationMode.MembershipAuthentication;
+        private static AuthenticationMode mode = AuthenticationMode.Membership;
 
         private Authentication()
         {
@@ -79,7 +79,7 @@ namespace DemoLoginMembership
 
         public static IAuthenticator GetAuthenticator()
         {
-            if (mode == AuthenticationMode.MembershipAuthentication)
+            if (mode == AuthenticationMode.Membership)
             {
                 return membershipAuthenticator;
             }
